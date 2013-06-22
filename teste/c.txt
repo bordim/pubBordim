@@ -1,0 +1,42 @@
+Este tutorial mostra como criar um sparse-checkout a partir de um repositório existente no BitBucket.
+Assume-se que há um repositório com várias pastas (sub-dirs) e vamos fazer o checkout de um dos diretórios. 
+Exemplo:
+<Repositorio>/<dirA>
+<Repositorio>/<dirB>
+<Repositorio>/<dirC> 
+Neste exemplo vamos seguir os passos descrito aqui!
+No exemplo que segue, considere que o <repositorio> seja Modesto e vamos fazer um sparse-checkout do sub-dir production.
+
+Criando o diretório e inicializando o git
+MacBook-3:$ mkdir Modesto
+MacBook-3:$ cd Modesto/
+MacBook-3:$ git init
+Initialized empty Git repository in /Users/bordim/Documents/Projetos/BitBucket/Modesto/.git/
+Adicionando o repositório (apenas inclui a lista no .git), faz cópia de arquivos.
+MacBook-3:$ git remote add -f bordim  https://bordim@bitbucket.org/felipe_modesto/mestrado.git
+Updating bordim
+remote: Counting objects: 5709, done.
+remote: Compressing objects: 100% (1286/1286), done.
+remote: Total 5709 (delta 4412), reused 5702 (delta 4409)
+Receiving objects: 100% (5709/5709), 455.41 MiB | 1.08 MiB/s, done.
+Resolving deltas: 100% (4412/4412), done.
+From https://bitbucket.org/felipe_modesto/mestrado
+ * [new branch]      master     -> bordim/master
+Verificando o status
+MacBook-3:$ git status
+# On branch master
+#
+# Initial commit
+#
+nothing to commit (create/copy files and use "git add" to track)
+Configurando o sparse-checkout, e incluindo o diretório a ser realizado o checkout
+MacBook-3:$ git config core.sparsecheckout true
+MacBook-3:$ echo production >> .git/info/sparse-checkout
+Fazendo o pull do diretório de interesse (no caso o production)
+MacBook-3:$ git pull https://bordim@bitbucket.org/felipe_modesto/mestrado.git master
+From https://bitbucket.org/felipe_modesto/mestrado
+ * branch            master     -> FETCH_HEAD
+Testando o resultado
+MacBook-3:Modesto Bordim$ ls
+production
+```
